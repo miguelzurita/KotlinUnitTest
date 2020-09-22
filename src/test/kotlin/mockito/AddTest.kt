@@ -50,4 +50,13 @@ class AddTest {
             validNumber!!.checkZero(0)
         }
     }
+
+    @Test
+    fun addRealMethodTest() {
+        `when`(validNumber!!.check(3)).thenCallRealMethod()
+        assertEquals(true, validNumber.check(3))
+
+        `when`(validNumber!!.check("3")).thenCallRealMethod()
+        assertEquals(false, validNumber.check("3"))
+    }
 }
