@@ -1,5 +1,6 @@
 package mockito
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -7,6 +8,8 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import java.lang.ArithmeticException
+import java.lang.Exception
 
 class AddTest {
     @InjectMocks
@@ -29,5 +32,22 @@ class AddTest {
         `when`(validNumber!!.check(-3)).thenReturn(false)
         val checkNumber2: Boolean = validNumber!!.check(-3)
         assertEquals(false, checkNumber2)
+    }
+
+    @Test
+    fun addMockExceptionTest() {
+        `when`(validNumber!!.checkZero(0)).thenThrow(ArithmeticException("Can't accept zero"))
+
+        var exception: Exception? = null
+        try {
+            validNumber.checkZero(0)
+        } catch (e: ArithmeticException) {
+            exception = e
+        }
+
+        assertNotNull(exception)
+        assertThrows(ArithmeticException::class.java) {
+            validNumber!!.checkZero(0)
+        }
     }
 }

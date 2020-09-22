@@ -14,7 +14,7 @@ class ValidNumber {
     fun checkZero(o: Any): Boolean {
         return if (o is Int) {
             if (o == 0) {
-                throw ArithmeticException("No podemos aceptar cero")
+                throw ArithmeticException("Can't accept zero")
             }else{
                 true
             }
