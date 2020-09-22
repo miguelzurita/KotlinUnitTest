@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.lang.ArithmeticException
 
 class ValidNumberTest {
 
@@ -41,8 +42,26 @@ class ValidNumberTest {
     }
 
     @Test
-    fun checkZeroTest() {
+    fun check0Test() {
         assertEquals(true, validNumber!!.check(0))
+    }
+
+    @Test
+    fun checkZeroTest() {
+        assertEquals(true, validNumber!!.checkZero(-57))
+    }
+
+    @Test
+    fun checkZeroStringTest() {
+        assertEquals(false, validNumber!!.checkZero("5"))
+    }
+
+    @Test
+    fun checkZero0Test() {
+        assertThrows(ArithmeticException::class.java) {
+            validNumber!!.checkZero(0)
+        }
+
     }
 
 }
