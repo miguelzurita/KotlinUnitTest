@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -67,5 +68,40 @@ class AddTest {
         `when`(validNumber!!.doubleToInt(7.777)).thenAnswer(answer)
         assertEquals(14, add!!.addInt(7.777))
 
+    }
+
+    /*
+    Arrange
+    Act (Action / Method to test)
+    Assert
+
+    Given
+    When
+    Then
+     */
+    @Test
+    fun aaaPatternTest() {
+        //Arrange
+        `when`(validNumber!!.check(4)).thenReturn(true)
+        `when`(validNumber.check(5)).thenReturn(true)
+
+        //Act
+        val result = add!!.add(4, 5)
+
+        //Assert
+        assertEquals(9, result)
+    }
+
+    @Test
+    fun bddPatternTest() {
+        //Given
+        given(validNumber!!.check(4)).willReturn(true)
+        given(validNumber.check(5)).willReturn(true)
+
+        //When
+        val result = add!!.add(4, 5)
+
+        //Then
+        assertEquals(9, result)
     }
 }
