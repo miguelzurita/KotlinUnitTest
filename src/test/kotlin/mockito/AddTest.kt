@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers
+import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -103,5 +105,17 @@ class AddTest {
 
         //Then
         assertEquals(9, result)
+    }
+
+    @Test
+    fun argumentMatcherTest() {
+        //Given
+        given(validNumber!!.check(ArgumentMatchers.anyInt())).willReturn(true)
+
+        //When
+        val result = add!!.add(10, 20)
+
+        //Then
+        assertEquals(30, result)
     }
 }
