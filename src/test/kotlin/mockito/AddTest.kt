@@ -8,6 +8,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.stubbing.Answer
 import java.lang.ArithmeticException
 import java.lang.Exception
 
@@ -58,5 +59,13 @@ class AddTest {
 
         `when`(validNumber!!.check("3")).thenCallRealMethod()
         assertEquals(false, validNumber.check("3"))
+    }
+
+    @Test
+    fun addDoubleToIntThenAnswerTest() {
+        val answer: Answer<Int> = Answer{ 7 }
+        `when`(validNumber!!.doubleToInt(7.777)).thenAnswer(answer)
+        assertEquals(14, add!!.addInt(7.777))
+
     }
 }

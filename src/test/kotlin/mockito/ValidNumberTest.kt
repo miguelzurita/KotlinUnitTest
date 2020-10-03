@@ -64,4 +64,14 @@ class ValidNumberTest {
 
     }
 
+    @Test
+    fun doubleToIntTest() {
+        assertEquals(9, validNumber!!.doubleToInt(9.99999))
+    }
+
+    @Test
+    fun doubleToIntErrorTest() {
+        assertEquals(0, validNumber!!.doubleToInt("9.9999"))
+    }
+
 }

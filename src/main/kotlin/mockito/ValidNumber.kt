@@ -15,11 +15,19 @@ class ValidNumber {
         return if (o is Int) {
             if (o == 0) {
                 throw ArithmeticException("Can't accept zero")
-            }else{
+            } else {
                 true
             }
-        }else {
+        } else {
             false
+        }
+    }
+
+    fun doubleToInt(o: Any): Int {
+        return if (o is Double) {
+            o.toInt()
+        } else {
+            0
         }
     }
 }

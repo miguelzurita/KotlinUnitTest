@@ -9,5 +9,8 @@ class Add(var validNumber: ValidNumber) {
         }
     }
 
+    fun addInt(a: Any): Int {
+        return validNumber.doubleToInt(a) * 2
+    }
 
 }
