@@ -21,6 +21,9 @@ class AddTest {
     @Mock
     private val validNumber: ValidNumber? = null
 
+    @Captor
+    private val captor: ArgumentCaptor<Int>? = null
+
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -166,5 +169,20 @@ class AddTest {
 
         add.addPrint(4, 7f)
         Mockito.verify(print).showError()
+    }
+
+    @Test
+    fun captorTest() {
+        //Given
+        given(validNumber!!.check(4)).willReturn(true)
+        given(validNumber.check(5)).willReturn(true)
+
+        //When
+        add!!.addPrint(4, 5)
+
+        //Then
+        verify(print)!!.showMessage(captor!!.capture())
+        assertEquals(9, captor.value)
+
     }
 }
