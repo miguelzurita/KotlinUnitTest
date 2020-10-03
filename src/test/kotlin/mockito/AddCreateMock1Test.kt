@@ -7,11 +7,13 @@ import org.mockito.Mockito
 class AddCreateMock1Test {
     private var add: Add? = null
     private var validNumber: ValidNumber? = null
+    private var print: Print? = null
 
     @BeforeEach
     fun setUp() {
         validNumber = Mockito.mock(ValidNumber::class.java)
-        add = Add(validNumber!!)
+        print = Mockito.mock(Print::class.java)
+        add = Add(validNumber!!, print!!)
     }
 
     @Test

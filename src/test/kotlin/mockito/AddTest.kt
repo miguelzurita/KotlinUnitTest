@@ -4,13 +4,9 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
-import org.mockito.BDDMockito.any
-import org.mockito.BDDMockito.given
-import org.mockito.InjectMocks
-import org.mockito.Mock
+import org.mockito.*
+import org.mockito.BDDMockito.*
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.stubbing.Answer
 import java.lang.ArithmeticException
 import java.lang.Exception
@@ -18,6 +14,9 @@ import java.lang.Exception
 class AddTest {
     @InjectMocks
     private val add: Add? = null
+
+    @Mock
+    private val print: Print? = null
 
     @Mock
     private val validNumber: ValidNumber? = null
@@ -66,7 +65,7 @@ class AddTest {
 
     @Test
     fun addDoubleToIntThenAnswerTest() {
-        val answer: Answer<Int> = Answer{ 7 }
+        val answer: Answer<Int> = Answer { 7 }
         `when`(validNumber!!.doubleToInt(7.777)).thenAnswer(answer)
         assertEquals(14, add!!.addInt(7.777))
 
@@ -117,5 +116,55 @@ class AddTest {
 
         //Then
         assertEquals(30, result)
+    }
+
+    @Test
+    fun addPrintVerifyTimesTest() {
+        //Given
+        given(validNumber!!.check(4)).willReturn(true)
+
+        //When
+        val result = add!!.add(4, 4)
+
+        //Then
+        //check how many times the function was called
+        Mockito.verify(validNumber, Mockito.times(2)).check(4)
+        assertEquals(8, result)
+    }
+
+    @Test
+    fun verifyTypesTest() {
+        //Given
+        given(validNumber!!.check(4)).willReturn(true)
+        given(validNumber.check(5)).willReturn(true)
+
+        //When
+        val result = add!!.add(4, 5)
+
+        //Then
+        Mockito.verify(validNumber).check(4)
+        Mockito.verify(validNumber).check(5)
+        //verify that validNumber.check(9) was never called
+        Mockito.verify(validNumber, Mockito.never()).check(9)
+        //atLeast
+        Mockito.verify(validNumber, Mockito.atLeast(1)).check(4)
+        //atMost
+        Mockito.verify(validNumber, Mockito.atMost(3)).check(5)
+
+        assertEquals(9, result)
+    }
+
+    @Test
+    fun addPrintTest() {
+        //Given
+        given(validNumber!!.check(4)).willReturn(true)
+        given(validNumber.check(5)).willReturn(true)
+
+
+        add!!.addPrint(4, 5)
+        Mockito.verify(print!!, Mockito.atLeast(1)).showMessage(9)
+
+        add.addPrint(4, 7f)
+        Mockito.verify(print).showError()
     }
 }
